@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nepal in the Path</title>
+<meta name="description" content="Where Nepal's ice, gorges, earthquakes and people meet — data, maps and evidence after the 26 August 2026 Tsangbu Ri–Trishuli disaster.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M2 26 L11 10 L16 18 L21 8 L30 26 Z' fill='%231d1b16'/><path d='M8 26 C 12 22 14 24 17 21 S 23 19 26 26' fill='none' stroke='%23eb6834' stroke-width='2.4'/></svg>">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="https://unpkg.com/pmtiles@3.2.1/dist/pmtiles.js"></script>
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+  <a class="brand" href="index.html"><svg class="mark" viewBox="0 0 32 32"><path d="M2 26 L11 10 L16 18 L21 8 L30 26 Z" fill="currentColor"/><path d="M8 26 C 12 22 14 24 17 21 S 23 19 26 26" fill="none" stroke="#eb6834" stroke-width="2.4"/></svg>Nepal in the Path</a>
+  <nav>
+    <a href="#story" class="on">Story</a><a href="#corridor">26 Aug 2026</a><a href="#events">Past floods</a>
+    <a href="#places">Places</a><a href="#people">People</a><a href="map.html">Explorer map</a><a href="#data">Data</a>
+  </nav>
+</div></header>
+
+<main>
+<section class="hero"><div class="wrap">
+  <svg class="ridge" viewBox="0 0 640 300" aria-hidden="true"><defs><linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#2a78d6" stop-opacity=".18"/><stop offset="1" stop-color="#2a78d6" stop-opacity="0"/></linearGradient></defs>
+    <path d="M0 260 L70 190 L110 215 L170 120 L210 165 L260 60 L300 120 L345 85 L390 150 L440 70 L490 140 L540 110 L640 220 L640 300 L0 300Z" fill="url(#g)"/>
+    <path d="M0 260 L70 190 L110 215 L170 120 L210 165 L260 60 L300 120 L345 85 L390 150 L440 70 L490 140 L540 110 L640 220" fill="none" stroke="#1d1b16" stroke-width="1.6"/>
+    <path d="M250 70 l10 -10 l10 12 M430 80 l10 -10 l12 14" fill="none" stroke="#2a78d6" stroke-width="3"/>
+    <path d="M262 64 C 270 150 300 170 320 230 S 360 290 420 296" fill="none" stroke="#eb6834" stroke-width="2.4" stroke-dasharray="1 0"/>
+  </svg>
+  <div class="kicker">Floods · ice · gorges · earthquakes · people</div>
+  <h1>Managing the crisis is <em>not</em> the same as solving it.</h1>
+  <p class="lede">On 26 August 2026 a mountainside of rock and ice on Tsangbu Ri fell into the Lende Khola and became a flood that killed or left missing more than 6,700 people along the Trishuli. This site puts the evidence in one place: where the ice is, how the gorges funnel water, what seismometers heard, and who lives in the path.</p>
+  <div class="kpis" id="kpis"></div>
+</div></section>
+
+<section id="story"><div class="wrap scrolly">
+  <div class="steps">
+    <div class="step" data-step="ice"><div class="box"><div class="num">01 · THE ICE</div>
+      <h2><span data-k="glaciers_nepal"></span> glaciers</h2>
+      <p>Nepal holds about 4,500 glaciers covering <b><span data-k="glacier_km2"></span> km²</b>. Most of the ice sits between 5,000 and 6,000 m, the band that is warming fastest. Beneath them, <b><span data-k="lakes_2022"></span> glacial lakes</b> now cover 8% more area than in 2016–17.</p>
+      <span class="chip"><i style="--c:#2a78d6"></i>Glaciers</span><span class="chip"><i style="--c:#38a0d8"></i>Glacial lakes</span><span class="chip"><i class="dot" style="--c:#d03b3b"></i>Potentially dangerous lake (ICIMOD)</span></div></div>
+    <div class="step" data-step="abroad"><div class="box"><div class="num">02 · ACROSS THE BORDER</div>
+      <h2>46% of the ice is abroad</h2>
+      <p>Much of the ice feeding Nepal's rivers lies in Tibet: 62% for the Koshi basin, which also holds 42 of the 47 potentially dangerous lakes, 25 of them in China. The hazard starts outside Nepal's jurisdiction. So must the warning.</p></div></div>
+    <div class="step" data-step="gorges"><div class="box"><div class="num">03 · THE FUNNELS</div>
+      <h2><span data-k="gorge_km"></span> km of gorges</h2>
+      <p>We cut ~24,000 cross-sections across Nepal's rivers on a 30 m elevation model. Where both valley walls rise 400 m within a kilometre of the river, we call it a gorge. Within 100 km downstream of ice, <b>46%</b> of river length is gorge, against 9% elsewhere. Floods cannot spread out there; they stack up.</p>
+      <span class="chip"><i class="line" style="--c:#eb6834"></i>Gorge</span><span class="chip"><i class="line" style="--c:#b5401a"></i>Deep gorge</span></div></div>
+    <div class="step" data-step="corridor"><div class="box"><div class="num">04 · 26 AUGUST 2026</div>
+      <h2>8 minutes to the border</h2>
+      <p>At 08:37 NPT about 100 million m³ of rock and ice broke from Tsangbu Ri. The flood reached Gyirong Port in ~7 minutes and ran through gorges for 51 of its first 61 km. It damaged 12 hydropower projects and buried bazaars built on the valley floor.</p>
+      <span class="chip"><i class="line" style="--c:#1d1b16"></i>Flood path</span></div></div>
+    <div class="step" data-step="events"><div class="box"><div class="num">05 · EVERY FLOOD, THE SAME QUESTIONS</div>
+      <h2>15 cascades since 1977</h2>
+      <p>Lake outbursts, landslide dams, rock-ice avalanches: Seti 2012, Jure 2014, Langtang 2015, Bhotekoshi 2016, Melamchi 2021, Thame 2024, Rasuwagadhi 2025 (the same corridor, 13 months earlier), and now 2026.</p>
+      <span class="chip"><i class="dot" style="--c:#1d1b16"></i>Recorded seismically</span><span class="chip"><i class="dot" style="--c:#fff;border:1.5px solid #1d1b16"></i>Partial</span><span class="chip"><i class="dot" style="--c:#fff;border:1.5px solid #8b877c"></i>Before open stations</span></div></div>
+    <div class="step" data-step="signals"><div class="box"><div class="num">06 · THE SIGNALS WERE THERE</div>
+      <h2>Heard in seconds</h2>
+      <p>Earthquakes strike the whole length of Nepal: the west (337 M≥4 since 1900) as often as the east. Seismometers also hear mountains fall. The 2026 collapse registered at 110× normal shaking 57 km away within a minute, and a small ML 2.5 event 17 minutes earlier is visible in the same open record.</p>
+      <span class="chip"><i class="dot" style="--c:#4a3aa7"></i>M≥4 earthquakes 1900–2026</span></div></div>
+    <div class="step" data-step="people"><div class="box"><div class="num">07 · PEOPLE IN THE PATH</div>
+      <h2><span data-k="pop_ice100_vf_fmt"></span> people</h2>
+      <p>That many people live on valley floors within 100 km below glacier ice; 600,000 live along glacier-fed rivers. We flag <b><span data-k="places_at_risk"></span> settlements</b> whose position, upstream ice, dangerous lakes and gorges put them in the path of a cascade.</p>
+      <span class="chip"><i style="--c:#2a78d6"></i>Valley floor ≤100 km below ice</span><span class="chip"><i style="--c:#d03b3b"></i>Below a dangerous lake</span><span class="chip"><i class="dot" style="--c:#d03b3b"></i>Settlement at risk</span></div></div>
+    <div class="step" data-step="growth"><div class="box"><div class="num">08 · WE KEEP BUILDING IN THE PATH</div>
+      <h2><span data-k="built_growth_ice100_x"></span>× more buildings</h2>
+      <p>Built-up area on glacier-fed valley floors grew 5.7-fold between 1975 and 2025 (GHSL), faster than Nepal as a whole (4.5×). It grew 7.7× in the Trishuli corridor and 9.4× along the Bhotekoshi–Sunkoshi. <b><span data-k="road_km_ice100_vf"></span> km of road</b> run along these floors.</p></div></div>
+  </div>
+  <div class="sticky"><div id="storymap"></div><div class="disclaimer">Screening map, not an official hazard map</div></div>
+</div></section>
+
+<section class="block" id="corridor"><div class="wrap">
+  <h2>26 August 2026, minute by minute</h2>
+  <p class="sub">Open seismic data from Kakani (NK.KKN, 57 km away) show the precursor at −17 min, the collapse at 08:37, and a second "flood rumble" peaking ~41 minutes later as the flood passed the lower Trishuli. The bars show when the flood front would reach each place for front speeds from 52 m/s (the measured peak in the first 25 km) down to 20 m/s. A seismic alert at the moment of collapse would have left the light-blue minutes to act.</p>
+  <div class="grid2">
+    <div class="card"><h3>Ground shaking at Kakani</h3><div class="chart" id="ch-seis"></div><p class="note">60-s RMS ground motion, 2–15 Hz, relative to the hour before. Inset timing from Adhikari et al. (2026, Seismica).</p></div>
+    <div class="card"><h3>Time the towns had</h3><div class="chart" id="ch-arrival"></div><p class="note">Modelled along the DEM flow path. Adhikari et al. measured ~163 km/h over the first 25 km, slowing to ~33 km/h downstream.</p></div>
+  </div>
+  <div class="card" style="margin-top:22px"><h3>A 5 km drop, mostly through gorges</h3><div class="chart" id="ch-profile" style="min-height:300px"></div></div>
+  <h3 style="margin-top:34px;font-size:26px">Before and after, from space</h3>
+  <p class="sub">Sentinel-2 true colour, same post-monsoon season one year apart. Drag the handle.</p>
+  <div class="grid2" id="ba-grid"></div>
+</div></section>
+
+<section class="block" id="events"><div class="wrap">
+  <h2>Every flood, the same questions</h2>
+  <p class="sub">Fifteen cascades in and around Nepal since 1977, and whether each left a seismic record (catalogues, open waveforms, or published studies). Photos are openly licensed (Wikimedia Commons); credits are on each image.</p>
+  <div class="timeline" id="ev-grid"></div>
+</div></section>
+
+<section class="block" id="places"><div class="wrap">
+  <h2>Places in the path</h2>
+  <p class="sub">322 named settlements sit on a valley floor (≤20 m above the river) of a glacier-fed river within 100 km below glacier ice or 150 km below an ICIMOD potentially dangerous lake. Tiers: <span class="tier t1"></span>below a dangerous lake and in a gorge · <span class="tier t2"></span>below a dangerous lake · <span class="tier t3"></span>glacier-fed gorge floor · <span class="tier t4"></span>glacier-fed valley floor. Arrival times assume a 10 m/s flood front (range 5–45 m/s).</p>
+  <div class="tools"><input id="q" placeholder="Search a place — English or नेपाली"><select id="f-prov"><option value="">All districts</option></select><select id="f-tier"><option value="">All tiers</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+  <div class="tablewrap"><table class="places" id="tbl"><thead><tr>
+    <th data-k="name">Place</th><th data-k="district">District</th><th data-k="risk_tier">Tier</th><th data-k="hand_m">Height above river (m)</th>
+    <th data-k="upstream_pdgl_n">Dangerous lakes upstream</th><th data-k="arrival_min_from_pdgl_10ms">Minutes from lake</th>
+    <th data-k="arrival_min_from_ice_10ms">Minutes from ice</th><th data-k="valley_floor_pop_1km">Valley-floor residents ≤1 km</th></tr></thead><tbody></tbody></table></div>
+  <p class="note">Screening estimate from open data. It is not a site survey. Report corrections via the project repository.</p>
+</div></section>
+
+<section class="block" id="people"><div class="wrap">
+  <h2>Who is exposed, and who can least cope?</h2>
+  <p class="sub">Exposure: people living on valley floors within 100 km below glacier ice (WorldPop 2020, scaled to Census 2021). Vulnerability: a transparent score averaging four percentile ranks: share of children under 5, share of adults 65+, share of the district more than 60 minutes from a hospital (HeiGIT), and provincial multidimensional poverty (DHS 2022).</p>
+  <div class="grid2">
+    <div class="card"><h3>Municipalities: exposure vs vulnerability</h3><div class="chart" id="ch-scatter" style="min-height:380px"></div></div>
+    <div class="card"><h3>Most-exposed municipalities</h3><div id="muni-top"></div></div>
+  </div>
+  <div class="grid2" style="margin-top:22px">
+    <div class="card"><h3>Building in the path, 1975–2025</h3><div class="chart" id="ch-enc"></div><p class="note">GHSL built-up surface (100 m) on valley floors (≤20 m above river).</p></div>
+    <div class="card"><h3>Summers at the collapse source are warmer</h3><div class="chart" id="ch-clim"></div><p class="note">ERA5-Land June–August mean temperature at 5,140 m (grid cell at the source). The 2020s are the warmest decade in the record; the 30 days before the collapse ran +1.2 °C above 1991–2020.</p></div>
+  </div>
+</div></section>
+
+<section class="block" id="data"><div class="wrap">
+  <h2>Data, methods and credits</h2>
+  <div class="grid2">
+    <div class="card"><h3>Download</h3>
+      <p>Web-ready layers in <code>data/</code> (PMTiles, GeoJSON, JSON). Full-resolution rasters, tables and code: <b>Zenodo DOI (to be minted on first release)</b>.</p>
+      <ul><li><a href="data/json/places_at_risk.json">Places at risk (JSON)</a></li><li><a href="data/json/municipalities_index.json">Municipal indicators (JSON)</a></li>
+      <li><a href="data/geo/events.geojson">Events (GeoJSON)</a></li><li><a href="data/geo/pdgl.geojson">Potentially dangerous lakes (GeoJSON)</a></li>
+      <li><a href="data/geo/earthquakes.geojson">Earthquakes M≥4 (GeoJSON)</a></li><li><a href="data/SIZE_REPORT.md">Size report</a></li></ul></div>
+    <div class="card"><h3>Method in brief</h3>
+      <p><b>Rivers</b>: D8 routing on the 90 m Copernicus DEM. <b>Gorges</b>: perpendicular cross-sections on the 30 m DEM. <b>Exposure</b>: height above nearest drainage ≤20 m. <b>Seismic</b>: open FDSN waveforms (NK.KKN, IO.EVN, GFZ XN) and the USGS, EMSC and ISC catalogues. <b>Literature</b>: Adhikari et al. 2026 (Seismica); Agarwala 2026 (NBSEH); Cook et al. 2018, 2021; ICIMOD/UNDP 2020.</p>
+      <p class="note">This is a screening tool. It is not an official hazard map or warning service. In an emergency follow NDRRMA and DHM.</p></div>
+  </div>
+  <div class="card" style="margin-top:20px"><h3>Image credits</h3><div id="credits" class="note"></div></div>
+</div></section>
+</main>
+
+<footer><div class="wrap cols">
+  <div><b>Nepal in the Path</b> — a data companion to the commentary <i>"Managing the Crisis Is Not the Same as Solving It"</i>. Data © their providers: OpenStreetMap contributors (ODbL), Copernicus DEM, Sentinel-2 (contains modified Copernicus Sentinel data 2020–2026), RGI 7.0, HMA glacial lake inventory, ICIMOD, USGS, EMSC, ISC, WorldPop, GHSL, HeiGIT, BIPAD/NDRRMA.</div>
+  <div><a href="map.html">Explorer map</a><br><a href="#places">Places in the path</a><br><a href="#events">Past floods</a></div>
+  <div>Built as a static site: MapLibre GL + PMTiles on GitHub Pages; full data on Zenodo.</div>
+</div></footer>
+
+<script type="module" src="assets/js/story.js"></script>
+</body>
+</html>

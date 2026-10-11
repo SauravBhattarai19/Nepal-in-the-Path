@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Explorer — Nepal in the Path</title>
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script src="https://unpkg.com/pmtiles@3.2.1/dist/pmtiles.js"></script>
+</head>
+<body>
+<header class="topbar"><div class="wrap">
+  <a class="brand" href="index.html"><svg class="mark" viewBox="0 0 32 32"><path d="M2 26 L11 10 L16 18 L21 8 L30 26 Z" fill="currentColor"/><path d="M8 26 C 12 22 14 24 17 21 S 23 19 26 26" fill="none" stroke="#eb6834" stroke-width="2.4"/></svg>Nepal in the Path</a>
+  <nav><a href="index.html#story">Story</a><a href="index.html#places">Places</a><a href="index.html#events">Past floods</a><a href="map.html" class="on">Explorer map</a><a href="index.html#data">Data</a></nav>
+</div></header>
+<div class="explorer-shell">
+  <aside class="panel">
+    <h2>Explorer</h2>
+    <div class="searchbox"><input id="search" placeholder="Find a place or municipality…" autocomplete="off"><ul class="results" id="results"></ul></div>
+    <h3>Hazard</h3>
+    <label class="layer"><input type="checkbox" data-g="glaciers" checked><span class="sw" style="--c:#2a78d6"></span>Glaciers &amp; glacial lakes</label>
+    <label class="layer"><input type="checkbox" data-g="pdgl" checked><span class="sw dot" style="--c:#d03b3b"></span>Potentially dangerous lakes (ICIMOD)</label>
+    <label class="layer"><input type="checkbox" data-g="gorges" checked><span class="sw line" style="--c:#eb6834"></span>Gorges (dark = deep)</label>
+    <label class="layer"><input type="checkbox" data-g="rivers" checked><span class="sw line" style="--c:#7fa3cc"></span>Rivers ≥100 km²</label>
+    <label class="layer"><input type="checkbox" data-g="quakes"><span class="sw dot" style="--c:#4a3aa7"></span>Earthquakes M≥4</label>
+    <div id="qwrap" style="display:none;padding-left:26px;font-size:13px">from <b id="qy">1900</b><input class="slider" type="range" id="qyear" min="1900" max="2026" value="1900"></div>
+    <label class="layer"><input type="checkbox" data-g="events" checked><span class="sw dot" style="--c:#1d1b16"></span>Past flood cascades</label>
+    <label class="layer"><input type="checkbox" data-g="path" checked><span class="sw line" style="--c:#1d1b16"></span>26 Aug 2026 flood path</label>
+    <h3>People &amp; assets</h3>
+    <label class="layer"><input type="checkbox" data-g="places" checked><span class="sw dot" style="--c:#d03b3b"></span>Settlements at risk (tiers 1–4)</label>
+    <label class="layer"><input type="checkbox" data-g="exposure"><span class="sw" style="--c:#2a78d6"></span>Exposed valley floors</label>
+    <label class="layer"><input type="checkbox" data-g="population"><span class="sw" style="--c:#3987e5"></span>Population density (WorldPop)</label>
+    <label class="layer"><input type="checkbox" data-g="municipalities"><span class="sw" style="--c:#86b6ef"></span>Municipalities: exposed people</label>
+    <label class="layer"><input type="checkbox" data-g="hydro"><span class="sw dot" style="--c:#b5401a"></span>Hydropower (OSM; dark = in gorge)</label>
+    <h3>Base</h3>
+    <label class="layer"><input type="checkbox" data-g="hillshade" checked><span class="sw" style="--c:#999"></span>Relief (Copernicus DEM)</label>
+    <p class="note" style="margin-top:18px">Click any feature for details. Screening layers from open data. This is not an official hazard map; in an emergency follow NDRRMA and DHM. Exposed floors: <span style="color:#86b6ef">■</span> glacier-fed · <span style="color:#2a78d6">■</span> ≤100 km below ice · <span style="color:#d03b3b">■</span> below a dangerous lake.</p>
+  </aside>
+  <div style="position:relative"><div id="explorer"></div></div>
+</div>
+<script type="module">
+import { newMap, setGroup, attachPopups } from "./assets/js/mapcore.js";
+const map = newMap("explorer");
+attachPopups(map);
+const h = location.hash.slice(1).split(",").map(Number);
+map.once("style.load", () => {
+  document.querySelectorAll("[data-g]").forEach((cb) => {
+    setGroup(map, cb.dataset.g, cb.checked);
+    cb.addEventListener("change", () => { setGroup(map, cb.dataset.g, cb.checked);
+      if (cb.dataset.g === "quakes") document.getElementById("qwrap").style.display = cb.checked ? "block" : "none"; });
+  });
+  if (h.length === 3 && h.every((v) => !Number.isNaN(v))) map.jumpTo({ center: [h[0], h[1]], zoom: h[2] });
+});
+document.getElementById("qyear").addEventListener("input", (e) => {
+  document.getElementById("qy").textContent = e.target.value;
+  map.setFilter("quakes", [">=", ["to-number", ["slice", ["get", "t"], 0, 4]], +e.target.value]);
+});
+map.on("moveend", () => { const c = map.getCenter(); history.replaceState(null, "", `#${c.lng.toFixed(4)},${c.lat.toFixed(4)},${map.getZoom().toFixed(1)}`); });
+const [places, munis] = await Promise.all([fetch("data/json/places_at_risk.json").then((r) => r.json()), fetch("data/json/municipalities_index.json").then((r) => r.json())]);
+const idx = [...places.map((p) => ({ label: p.name, sub: `${p.name_ne || ""} · ${p.district || ""} · at risk`, lon: p.lon, lat: p.lat, z: 12.5 })),
+             ...munis.map((m) => ({ label: m.municipality, sub: `${m.district} · municipality`, lon: m.lon, lat: m.lat, z: 10.5 }))];
+const res = document.getElementById("results");
+document.getElementById("search").addEventListener("input", (e) => {
+  const q = e.target.value.trim().toLowerCase();
+  if (q.length < 2) { res.innerHTML = ""; return; }
+  const hits = idx.filter((d) => d.label.toLowerCase().includes(q) || d.sub.toLowerCase().includes(q)).slice(0, 12);
+  res.innerHTML = hits.map((d, i) => `<li data-i="${idx.indexOf(d)}"><b>${d.label}</b><div class="note">${d.sub}</div></li>`).join("");
+});
+res.addEventListener("click", (e) => { const li = e.target.closest("li"); if (!li) return; const d = idx[+li.dataset.i];
+  map.flyTo({ center: [d.lon, d.lat], zoom: d.z, duration: 1400 }); });
+</script>
+</body>
+</html>
